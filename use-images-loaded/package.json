@@ -1,0 +1,38 @@
+{
+  "name": "use-images-loaded",
+  "version": "1.0.1",
+  "description": "A starter for creating a new React hook",
+  "author": {
+    "name": "Faraz Khan",
+    "email": "hello@colbyfayock.com",
+    "url": "https://twitter.com/colbyfayock"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "react-hooks"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir .",
+    "bump": "npm version",
+    "example": "cd example && yarn install && yarn package",
+    "prepublishOnly": "yarn build",
+    "watch": "nodemon --watch src --exec \"yarn build\""
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "nodemon": "^2.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colbyfayock/use-images-loaded"
+  },
+  "bugs": {
+    "url": "https://github.com/colbyfayock/use-images-loaded/issues"
+  }
+}

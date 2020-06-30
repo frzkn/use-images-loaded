@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "workspaces": [
+    "example",
+    "use-images-loaded"
+  ],
+  "scripts": {
+    "build": "yarn build:hook && yarn build:example",
+    "build:example": "yarn workspace example package",
+    "build:hook": "yarn workspace use-images-loaded build",
+    "bump": "yarn workspace use-images-loaded bump",
+    "develop": "yarn watch",
+    "watch": "concurrently -n Hook,Example \"yarn watch:hook\" \"yarn watch:example\"",
+    "watch:example": "yarn workspace example develop",
+    "watch:hook": "yarn workspace use-images-loaded watch",
+    "setup": "node ./scripts/setup.js"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
