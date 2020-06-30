@@ -2,6 +2,8 @@
 
 Custom react hook which returns true once all the images inside a container are loaded.
 
+Check out a working demo [here](https://use-images-loaded.netlify.app)
+
 ### 🚀 Getting Started
 
 #### Installation
