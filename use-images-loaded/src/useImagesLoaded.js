@@ -7,24 +7,26 @@ const useImagesLoaded = () => {
 
   useEffect(() => {
     if (!ref) return
+    const resolveReference = []
     const imageElements = ref.getElementsByTagName('img')
     const promisesArray = [...imageElements].map((img) => {
       if (!img.complete) {
         return new Promise((resolve) => {
-          img.addEventListener(
-            'load',
-            () => {
-              resolve()
-            },
-            { once: true }
-          )
+          resolveReference.push(resolve)
+          img.addEventListener('load', resolve, { once: true })
         })
       } else return null
     })
     if (promisesArray.length > 0) {
-      console.log(promisesArray)
       Promise.all(promisesArray).then(() => {
         setImagesLoaded(true)
+      })
+    }
+
+    return () => {
+      imageElements.forEach((img, index) => {
+        console.log(resolveReference)
+        img.removeEventListener('load', resolveReference[index])
       })
     }
   }, [ref])
