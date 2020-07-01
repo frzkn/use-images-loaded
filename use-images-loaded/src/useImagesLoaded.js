@@ -6,20 +6,23 @@ const useImagesLoaded = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false)
 
   useEffect(() => {
-    let promisesArray = []
     if (!ref) return
-    const imageElements = ref.querySelectorAll('img')
-    imageElements.forEach((img) => {
+    const imageElements = ref.getElementsByTagName('img')
+    const promisesArray = [...imageElements].map((img) => {
       if (!img.complete) {
-        let promise = new Promise((resolve) => {
-          img.addEventListener('load', () => {
-            resolve()
-          })
+        return new Promise((resolve) => {
+          img.addEventListener(
+            'load',
+            () => {
+              resolve()
+            },
+            { once: true }
+          )
         })
-        promisesArray.push(promise)
-      }
+      } else return null
     })
     if (promisesArray.length > 0) {
+      console.log(promisesArray)
       Promise.all(promisesArray).then(() => {
         setImagesLoaded(true)
       })

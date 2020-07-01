@@ -1,6 +1,6 @@
 {
   "name": "use-images-loaded",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Returns true once all the images inside a container are loaded",
   "author": {
     "name": "Faraz Khan",
