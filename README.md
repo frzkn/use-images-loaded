@@ -17,7 +17,7 @@ yarn add use-images-loaded
 Displaying a loading indicator while images are loading in a container
 
 ```
-import useImageLoaded from 'use-image-loaded'
+import useImageLoaded from 'use-images-loaded'
 
 const ImageContainer = () => {
   const [ref, loaded] = useImagesLoaded()
