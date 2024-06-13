@@ -1,14 +1,14 @@
 'use strict'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 const useImagesLoaded = () => {
-  const [ref, setRef] = useState(null)
+  const ref = useRef(null)
   const [imagesLoaded, setImagesLoaded] = useState(false)
 
   useEffect(() => {
-    if (!ref) return
+    if (!ref.current) return
     const resolveReference = []
-    const imageElements = ref.getElementsByTagName('img')
+    const imageElements = ref.current.getElementsByTagName('img')
     const promisesArray = [...imageElements].map((img) => {
       if (!img.complete) {
         return new Promise((resolve) => {
@@ -30,7 +30,7 @@ const useImagesLoaded = () => {
       })
     }
   }, [ref])
-  return [setRef, imagesLoaded]
+  return [ref, imagesLoaded]
 }
 
 export default useImagesLoaded
