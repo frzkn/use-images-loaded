@@ -3,18 +3,18 @@
   "version": "2.0.0",
   "description": "Know when the initial images inside a React container have settled",
   "type": "module",
-  "main": "./src/index.js",
+  "main": "./use-images-loaded/src/index.js",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./src/index.js",
-      "default": "./src/index.js"
+      "types": "./use-images-loaded/index.d.ts",
+      "import": "./use-images-loaded/src/index.js",
+      "default": "./use-images-loaded/src/index.js"
     }
   },
-  "types": "./index.d.ts",
+  "types": "./use-images-loaded/index.d.ts",
   "files": [
-    "src",
-    "index.d.ts",
+    "use-images-loaded/src",
+    "use-images-loaded/index.d.ts",
     "README.md",
     "LICENSE"
   ],

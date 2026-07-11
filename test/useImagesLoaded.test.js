@@ -4,7 +4,7 @@ import { JSDOM } from 'jsdom'
 import React, { act } from 'react'
 import { createRoot } from 'react-dom/client'
 import { renderToString } from 'react-dom/server'
-import { useImagesLoaded } from '../src/index.js'
+import { useImagesLoaded } from '../use-images-loaded/src/index.js'
 
 let dom
 const configuredImages = new WeakSet()
