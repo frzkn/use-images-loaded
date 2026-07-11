@@ -1,34 +1,45 @@
-## 🖼️ useImagesLoaded
+# use-images-loaded
 
-Custom react hook which returns true once all the images inside a container are loaded.
+A tiny React hook that reports when the initial images inside a client-rendered container have settled.
 
-Check out a working demo [here](https://use-images-loaded.netlify.app)
+## Install
 
-### 🚀 Getting Started
-
-#### Installation
-
-```
-yarn add use-images-loaded
+```sh
+npm install use-images-loaded
 ```
 
-#### Usage
+## Usage
 
-Displaying a loading indicator while images are loading in a container
+```jsx
+'use client'
 
-```
-import useImageLoaded from 'use-images-loaded'
+import { useImagesLoaded } from 'use-images-loaded'
 
-const ImageContainer = () => {
+function Gallery() {
   const [ref, loaded] = useImagesLoaded()
 
   return (
-    <div ref={ref}>
-    <p> Status: {loaded ? 'Loaded': 'Loading'} </p>
-    <img src="https://unsplash.it/200/200" alt="image"/>
-    <img src="https://unsplash.it/200/200" alt="image"/>
-    <img src="https://unsplash.it/200/200" alt="image"/>
+    <div ref={ref} aria-busy={!loaded}>
+      <p>{loaded ? 'Ready' : 'Loading'}</p>
+      <img src="/one.jpg" alt="" />
+      <img src="/two.jpg" alt="" />
     </div>
   )
 }
 ```
+
+The first render is `false`. After hydration, the hook snapshots the container's images and becomes `true` when each one has decoded or failed. An empty container also becomes `true`.
+
+Only the initial snapshot is tracked. Images inserted later or given a new `src` are not observed; remount the container when you need a fresh snapshot. Images using `loading="lazy"` may intentionally delay readiness until they approach the viewport.
+
+Use this for coordinated gallery reveals, layout measurement, canvas work, or screenshots. It does not replace dimensions, `aspect-ratio`, responsive images, optimization, or server data loading.
+
+## API
+
+```ts
+useImagesLoaded<T extends HTMLElement>(): readonly [RefCallback<T>, boolean]
+```
+
+In React Server Components frameworks, call the hook from a Client Component. The package is ESM-only and supports React 19.
+
+[MIT](LICENSE)

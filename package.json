@@ -1,21 +1,57 @@
 {
-  "private": true,
-  "workspaces": [
-    "example",
-    "use-images-loaded"
+  "name": "use-images-loaded",
+  "version": "2.0.0",
+  "description": "Know when the initial images inside a React container have settled",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  },
+  "types": "./index.d.ts",
+  "files": [
+    "src",
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
   ],
+  "sideEffects": false,
   "scripts": {
-    "build": "yarn build:hook && yarn build:example",
-    "build:example": "yarn workspace example package",
-    "build:hook": "yarn workspace use-images-loaded build",
-    "bump": "yarn workspace use-images-loaded bump",
-    "develop": "yarn watch",
-    "watch": "concurrently -n Hook,Example \"yarn watch:hook\" \"yarn watch:example\"",
-    "watch:example": "yarn workspace example develop",
-    "watch:hook": "yarn workspace use-images-loaded watch",
-    "setup": "node ./scripts/setup.js"
+    "test": "node --test",
+    "prepack": "npm test"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
-  }
+    "jsdom": "^29.1.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "author": {
+    "name": "Faraz Khan",
+    "email": "farazrk001@gmail.com",
+    "url": "https://farazkhan.me"
+  },
+  "keywords": [
+    "hook",
+    "image",
+    "images",
+    "load",
+    "decode",
+    "react",
+    "react-hooks"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frzkn/use-images-loaded.git"
+  },
+  "bugs": {
+    "url": "https://github.com/frzkn/use-images-loaded/issues"
+  },
+  "homepage": "https://github.com/frzkn/use-images-loaded#readme"
 }
