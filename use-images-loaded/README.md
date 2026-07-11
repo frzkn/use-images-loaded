@@ -46,4 +46,4 @@ In React Server Components frameworks, call the hook from a Client Component. Th
 
 Run `yarn`, then `yarn test`. Use `yarn develop` to run the existing example alongside the hook watcher.
 
-[MIT](LICENSE)
+[MIT](../LICENSE)

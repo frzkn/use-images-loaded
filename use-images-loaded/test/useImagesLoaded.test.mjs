@@ -1,10 +1,15 @@
 import assert from 'node:assert/strict'
+import { createRequire } from 'node:module'
 import { after, before, test } from 'node:test'
 import { JSDOM } from 'jsdom'
-import React, { act } from 'react'
-import { createRoot } from 'react-dom/client'
-import { renderToString } from 'react-dom/server'
-import { useImagesLoaded } from '../use-images-loaded/src/index.js'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TestUtils from 'react-dom/test-utils.js'
+import Server from 'react-dom/server.js'
+
+const { useImagesLoaded } = createRequire(import.meta.url)('../index.js')
+const { act } = TestUtils
+const { renderToString } = Server
 
 let dom
 const configuredImages = new WeakSet()
@@ -16,7 +21,6 @@ before(() => {
     document: dom.window.document,
     HTMLElement: dom.window.HTMLElement,
     Event: dom.window.Event,
-    IS_REACT_ACT_ENVIRONMENT: true,
   })
 })
 
@@ -43,17 +47,20 @@ const Gallery = ({ images = [], containerKey }) => {
 
 const renderGallery = async (props) => {
   const host = document.body.appendChild(document.createElement('div'))
-  const root = createRoot(host)
-  await act(async () => root.render(React.createElement(Gallery, props)))
+  const render = async (nextProps) =>
+    act(async () => {
+      ReactDOM.render(React.createElement(Gallery, nextProps), host)
+    })
+
+  await render(props)
 
   return {
     host,
-    root,
     loaded: () => host.firstElementChild?.getAttribute('data-loaded') === 'true',
     image: (index = 0) => host.querySelectorAll('img')[index],
-    render: async (nextProps) => act(async () => root.render(React.createElement(Gallery, nextProps))),
+    render,
     unmount: async () => {
-      await act(async () => root.unmount())
+      await act(async () => ReactDOM.unmountComponentAtNode(host))
       host.remove()
     },
   }

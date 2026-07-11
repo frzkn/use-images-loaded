@@ -1,57 +1,24 @@
 {
-  "name": "use-images-loaded",
-  "version": "2.0.0",
-  "description": "Know when the initial images inside a React container have settled",
-  "type": "module",
-  "main": "./use-images-loaded/src/index.js",
-  "exports": {
-    ".": {
-      "types": "./use-images-loaded/index.d.ts",
-      "import": "./use-images-loaded/src/index.js",
-      "default": "./use-images-loaded/src/index.js"
-    }
-  },
-  "types": "./use-images-loaded/index.d.ts",
-  "files": [
-    "use-images-loaded/src",
-    "use-images-loaded/index.d.ts",
-    "README.md",
-    "LICENSE"
+  "private": true,
+  "workspaces": [
+    "example",
+    "use-images-loaded"
   ],
-  "sideEffects": false,
   "scripts": {
-    "test": "node --test",
-    "prepack": "npm test"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0"
+    "test": "yarn workspace use-images-loaded test",
+    "build": "yarn build:hook && yarn build:example",
+    "build:example": "yarn workspace example package",
+    "build:hook": "yarn workspace use-images-loaded build",
+    "bump": "yarn workspace use-images-loaded bump",
+    "develop": "yarn watch",
+    "watch": "concurrently -n Hook,Example \"yarn watch:hook\" \"yarn watch:example\"",
+    "watch:example": "yarn workspace example develop",
+    "watch:hook": "yarn workspace use-images-loaded watch",
+    "setup": "node ./scripts/setup.js"
   },
   "devDependencies": {
-    "jsdom": "^29.1.1",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
-  },
-  "author": {
-    "name": "Faraz Khan",
-    "email": "farazrk001@gmail.com",
-    "url": "https://farazkhan.me"
-  },
-  "keywords": [
-    "hook",
-    "image",
-    "images",
-    "load",
-    "decode",
-    "react",
-    "react-hooks"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/frzkn/use-images-loaded.git"
-  },
-  "bugs": {
-    "url": "https://github.com/frzkn/use-images-loaded/issues"
-  },
-  "homepage": "https://github.com/frzkn/use-images-loaded#readme"
+    "concurrently": "^5.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
