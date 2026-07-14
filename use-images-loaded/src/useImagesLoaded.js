@@ -39,9 +39,11 @@ const useImagesLoaded = () => {
       })
     }
 
-    Promise.all([...container.querySelectorAll('img')].map(settle)).then(() => {
+    const markLoaded = () => {
       if (active) setLoaded(true)
-    })
+    }
+
+    Promise.all([...container.querySelectorAll('img')].map(settle)).then(markLoaded, markLoaded)
 
     return () => {
       active = false

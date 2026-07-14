@@ -2,13 +2,17 @@ import assert from 'node:assert/strict'
 import { createRequire } from 'node:module'
 import { after, before, test } from 'node:test'
 import { JSDOM } from 'jsdom'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import TestUtils from 'react-dom/test-utils.js'
-import Server from 'react-dom/server.js'
 
-const { useImagesLoaded } = createRequire(import.meta.url)('../index.js')
-const { act } = TestUtils
+const require = createRequire(import.meta.url)
+const React = require('react')
+const ReactDOM = require('react-dom')
+const TestUtils = require('react-dom/test-utils')
+const Server = require('react-dom/server')
+const { useImagesLoaded } = require('../index.js')
+const act = React.act || TestUtils.act
+const createRoot = Number.parseInt(React.version, 10) >= 18
+  ? require('react-dom/client').createRoot
+  : null
 const { renderToString } = Server
 
 let dom
@@ -21,6 +25,7 @@ before(() => {
     document: dom.window.document,
     HTMLElement: dom.window.HTMLElement,
     Event: dom.window.Event,
+    IS_REACT_ACT_ENVIRONMENT: true,
   })
 })
 
@@ -47,9 +52,11 @@ const Gallery = ({ images = [], containerKey }) => {
 
 const renderGallery = async (props) => {
   const host = document.body.appendChild(document.createElement('div'))
+  const root = createRoot?.(host)
   const render = async (nextProps) =>
     act(async () => {
-      ReactDOM.render(React.createElement(Gallery, nextProps), host)
+      const gallery = React.createElement(Gallery, nextProps)
+      root ? root.render(gallery) : ReactDOM.render(gallery, host)
     })
 
   await render(props)
@@ -60,7 +67,7 @@ const renderGallery = async (props) => {
     image: (index = 0) => host.querySelectorAll('img')[index],
     render,
     unmount: async () => {
-      await act(async () => ReactDOM.unmountComponentAtNode(host))
+      await act(async () => root ? root.unmount() : ReactDOM.unmountComponentAtNode(host))
       host.remove()
     },
   }
