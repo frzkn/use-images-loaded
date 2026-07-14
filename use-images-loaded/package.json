@@ -1,7 +1,7 @@
 {
   "name": "use-images-loaded",
-  "version": "1.0.3",
-  "description": "Returns true once all the images inside a container are loaded",
+  "version": "1.1.0",
+  "description": "Know when the initial images inside a React container have settled",
   "author": {
     "name": "Faraz Khan",
     "email": "farazrk001@gmail.com",
@@ -19,11 +19,21 @@
     "react-hooks"
   ],
   "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "useImagesLoaded.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "sideEffects": false,
   "scripts": {
     "build": "babel src --out-dir .",
     "bump": "npm version",
     "example": "cd example && yarn install && yarn package",
-    "prepublishOnly": "yarn build",
+    "test": "yarn build && node --test test/*.test.mjs",
+    "prepack": "yarn test",
+    "prepublishOnly": "yarn test",
     "watch": "nodemon --watch src --exec \"yarn build\""
   },
   "license": "MIT",
@@ -32,7 +42,11 @@
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
+    "jsdom": "^29.1.1",
     "nodemon": "^2.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0 <20"
   },
   "repository": {
     "type": "git",

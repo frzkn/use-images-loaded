@@ -1,10 +1,12 @@
 {
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "workspaces": [
     "example",
     "use-images-loaded"
   ],
   "scripts": {
+    "test": "yarn workspace use-images-loaded test",
     "build": "yarn build:hook && yarn build:example",
     "build:example": "yarn workspace example package",
     "build:hook": "yarn workspace use-images-loaded build",
@@ -16,6 +18,8 @@
     "setup": "node ./scripts/setup.js"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "concurrently": "^5.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
